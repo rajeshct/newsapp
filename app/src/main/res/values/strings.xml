@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">NewsApplication</string>
+    <string name="select_interest">Select topic in which you are interested</string>
+    <string name="noData">No data found, check internet connection or refresh</string>
+    <string name="continueFurther">Continue</string>
+    <string name="trending">Trending</string>
+    <string name="searchAnything">Search content of interest</string>
+    <string name="ReadFullNews">Tap here to read full news</string>
+    <string name="source">Source - %s</string>
+    <string name="changeCategory">Change Category</string>
+    <string name="search_message">Type your favourite content and search to get details.</string>
+    <string name="backPress">Press again to exit.</string>
+</resources>
