@@ -11,7 +11,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.startup.news.application.R
 import com.startup.news.application.adapter.NewsItemAdapter
+import com.startup.news.application.interfaces.databasecallback.ICategoryRecordCallback
 import com.startup.news.application.interfaces.viewcallback.INewsCallback
+import com.startup.news.application.localdatabase.databaseoperation.CategoryRecordDatabaseOperation
 import com.startup.news.application.model.apimodel.CategoryFirebaseResponse
 import com.startup.news.application.model.apimodel.NewsApiResponse
 import com.startup.news.application.mvp.presenter.NewsPresenter
@@ -21,12 +23,13 @@ import kotlinx.android.synthetic.main.include_recycler_view.*
  * Created by rajesh on 27/12/17.
  */
 
-class NewsFragmentItem : Fragment(), INewsCallback, NewsItemAdapter.RecyclerViewINewsCallback {
+class NewsFragmentItem : Fragment(), INewsCallback, NewsItemAdapter.RecyclerViewINewsCallback, ICategoryRecordCallback {
 
 
     private lateinit var category: CategoryFirebaseResponse
     private lateinit var newsItemAdapter: NewsItemAdapter
     private lateinit var newsData: MutableList<NewsApiResponse>
+    private lateinit var categoryDatabase: CategoryRecordDatabaseOperation
 
     object Instance {
         fun getInstance(category: CategoryFirebaseResponse): NewsFragmentItem {
@@ -37,7 +40,7 @@ class NewsFragmentItem : Fragment(), INewsCallback, NewsItemAdapter.RecyclerView
     }
 
     override fun showProgress() {
-        if (context != null)
+        if (context != null && newsData.isEmpty())
             loading.visibility = View.VISIBLE
     }
 
@@ -47,12 +50,12 @@ class NewsFragmentItem : Fragment(), INewsCallback, NewsItemAdapter.RecyclerView
     }
 
     override fun showMessage(message: String) {
-        if (context != null)
+        if (context != null && !message.isBlank())
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun noData() {
-        if (context != null)
+        if (context != null && newsData.isEmpty())
             noData.visibility = View.VISIBLE
     }
 
@@ -62,6 +65,7 @@ class NewsFragmentItem : Fragment(), INewsCallback, NewsItemAdapter.RecyclerView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        categoryDatabase = CategoryRecordDatabaseOperation()
         newsData = mutableListOf()
         newsItemAdapter = NewsItemAdapter(newsData)
         newsItemAdapter.initializeCallback(this)
@@ -78,7 +82,7 @@ class NewsFragmentItem : Fragment(), INewsCallback, NewsItemAdapter.RecyclerView
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        fetchDataFromServer()
+        categoryDatabase.getSelectedCategoryRecords(category.title, this)
     }
 
     private fun fetchDataFromServer() {
@@ -90,11 +94,9 @@ class NewsFragmentItem : Fragment(), INewsCallback, NewsItemAdapter.RecyclerView
     }
 
     override fun newsData(data: MutableList<NewsApiResponse>) {
-        if (context != null) {
-            pullToRefresh.isEnabled = false
-            newsData.addAll(data)
-            newsItemAdapter.notifyDataSetChanged()
-        }
+        updateRecyclerView(data)
+        categoryDatabase.insertCategoryRecord(categoryModel = category, data = data
+                , iDatabaseSuccessFailureCallback = this)
     }
 
     override fun openUrl(url: String?) {
@@ -104,4 +106,21 @@ class NewsFragmentItem : Fragment(), INewsCallback, NewsItemAdapter.RecyclerView
             customTabsIntent.launchUrl(context, Uri.parse(url))
         }
     }
+
+    override fun categoryDataFromDb(data: List<NewsApiResponse>) {
+        updateRecyclerView(data)
+    }
+
+    private fun updateRecyclerView(data: List<NewsApiResponse>) {
+        if (context != null) {
+            pullToRefresh.isEnabled = false
+            newsData.addAll(data)
+            newsItemAdapter.notifyDataSetChanged()
+        }
+    }
+
+    override fun emptyLocalDatabase() {
+        fetchDataFromServer()
+    }
+
 }

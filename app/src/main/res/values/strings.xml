@@ -10,4 +10,7 @@
     <string name="changeCategory">Change Category</string>
     <string name="search_message">Type your favourite content and search to get details.</string>
     <string name="backPress">Press again to exit.</string>
+    <string name="adUnitId">ca-app-pub-4143557295054104/5838821757</string>
+    <string name="interstiatialAdId">ca-app-pub-4143557295054104/9758665711</string>
+    <string name="default_notification_channel_id">2001</string>
 </resources>

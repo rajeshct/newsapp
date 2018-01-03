@@ -7,6 +7,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.startup.news.application.constants.AppConstants
 import com.startup.news.application.interfaces.viewcallback.ICategoryCallback
 import com.startup.news.application.model.apimodel.CategoryFirebaseResponse
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -69,6 +70,5 @@ class FireBaseGetData private constructor() {
                     homeDataCallback?.hideProgress()
                     homeDataCallback?.showMessage(AppConstants.COMMON_ERROR)
                 }
-
     }
 }

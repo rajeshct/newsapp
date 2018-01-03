@@ -1,4 +1,4 @@
-package com.startup.news.application.localdatabase
+package com.startup.news.application.localdatabase.databaseoperation
 
 import com.startup.news.application.interfaces.databasecallback.IDatabaseSuccessFailureCallback
 import com.startup.news.localdatabase.AppDatabase
@@ -11,7 +11,7 @@ import io.reactivex.schedulers.Schedulers
 /**
  * Created by admin on 12/27/2017.
  */
-class DatabaseOperation {
+class CategoryDatabaseOperation {
 
     fun insertCategory(categoryModel: CategoryModel, iDatabaseSuccessFailureCallback: IDatabaseSuccessFailureCallback?) {
         CompletableFromAction(Action {
@@ -30,4 +30,5 @@ class DatabaseOperation {
                     iHomeDatabaseCallback.categoryData(it)
                 }, { iHomeDatabaseCallback.showMessage("") })
     }
+
 }

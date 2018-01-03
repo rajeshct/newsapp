@@ -24,4 +24,5 @@ class CategoryTypeConverter {
         val type = object : TypeToken<List<CategoryFirebaseResponse>>() {}.type
         return gson.toJson(list, type)
     }
+
 }

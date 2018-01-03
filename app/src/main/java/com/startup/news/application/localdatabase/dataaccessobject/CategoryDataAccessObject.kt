@@ -1,7 +1,7 @@
 package com.startup.news.localdatabase.dataaccessobject
 
 import android.arch.persistence.room.*
-import com.startup.news.localdatabase.tables.CategoryModel
+import com.startup.news.application.localdatabase.tables.CategoryData
 import io.reactivex.Single
 
 
@@ -11,13 +11,13 @@ import io.reactivex.Single
 @Dao
 interface CategoryDataAccessObject {
 
-    @Query("SELECT * FROM CategoryModel")
-    fun getAll(): Single<List<CategoryModel>>
+    @Query("SELECT * FROM CategoryData where id= :title")
+    fun getAll(title: String): Single<List<CategoryData>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(users: CategoryModel)
+    fun insert(users: CategoryData)
 
     @Delete
-    fun delete(user: CategoryModel)
+    fun delete(user: CategoryData)
 
 }

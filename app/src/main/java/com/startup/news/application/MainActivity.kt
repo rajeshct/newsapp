@@ -5,11 +5,15 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.PopupMenu
+import android.view.View
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.startup.news.application.activities.SearchActivity
 import com.startup.news.application.adapter.NewsPagerAdapter
 import com.startup.news.application.fragments.NewsFragmentItem
 import com.startup.news.application.interfaces.databasecallback.IDatabaseSuccessFailureCallback
-import com.startup.news.application.localdatabase.DatabaseOperation
+import com.startup.news.application.localdatabase.databaseoperation.CategoryDatabaseOperation
 import com.startup.news.application.model.viewmodel.NewsTabModel
 import com.startup.news.fragments.SelectCategory
 import com.startup.news.localdatabase.tables.CategoryModel
@@ -24,6 +28,7 @@ class MainActivity : AppCompatActivity(), IDatabaseSuccessFailureCallback {
 
     override fun onPause() {
         isVisibleToUser = false
+        adView.pause()
         super.onPause()
     }
 
@@ -39,14 +44,38 @@ class MainActivity : AppCompatActivity(), IDatabaseSuccessFailureCallback {
     override fun onResume() {
         super.onResume()
         isVisibleToUser = true
+        adView.resume()
+    }
+
+    override fun onDestroy() {
+        adView.destroy()
+        super.onDestroy()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setUpTab()
+        loadBannerAd()
         iv_more.setOnClickListener {
             showPopupMenu()
+        }
+    }
+
+    private fun loadBannerAd() {
+        MobileAds.initialize(this, getString(R.string.adUnitId))
+        val adRequest = AdRequest.Builder().build()
+        adView.loadAd(adRequest)
+        adView.adListener = object : AdListener() {
+            override fun onAdLoaded() {
+                super.onAdLoaded()
+                adView.visibility = View.VISIBLE
+            }
+
+            override fun onAdFailedToLoad(p0: Int) {
+                super.onAdFailedToLoad(p0)
+                adView.visibility = View.GONE
+            }
         }
     }
 
@@ -66,7 +95,7 @@ class MainActivity : AppCompatActivity(), IDatabaseSuccessFailureCallback {
 
 
     private fun setUpTab() {
-        DatabaseOperation().getSelectedCategory(this)
+        CategoryDatabaseOperation().getSelectedCategory(this)
         pagerData = mutableListOf()
         newsPagerAdapter = NewsPagerAdapter(supportFragmentManager)
         newsPagerAdapter.initializeList(pagerData)

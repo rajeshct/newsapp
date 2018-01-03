@@ -1,6 +1,6 @@
 package com.startup.news.application.preaparedata
 
-import com.startup.news.application.localdatabase.DatabaseOperation
+import com.startup.news.application.localdatabase.databaseoperation.CategoryDatabaseOperation
 import com.startup.news.application.model.apimodel.CategoryFirebaseResponse
 import com.startup.news.application.prefrences.SharedPrefrenceData
 import com.startup.news.localdatabase.tables.CategoryModel
@@ -14,7 +14,7 @@ class GetCategorySelection {
         val dataToSend = data.filter { it.isSelected }
         val categoryModel = CategoryModel()
         categoryModel.data = dataToSend
-        DatabaseOperation().insertCategory(categoryModel, null)
+        CategoryDatabaseOperation().insertCategory(categoryModel, null)
         SharedPrefrenceData().setCategorySelected()
     }
 
