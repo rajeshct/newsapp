@@ -104,7 +104,7 @@ class SearchActivity : AppCompatActivity(), NewsItemAdapter.RecyclerViewINewsCal
 
     private fun showSearchMessage() {
         noData.visibility = View.VISIBLE
-        imageContent.setImageResource(R.drawable.ic_search)
+        imageContent.setImageResource(R.drawable.ic_search_logo)
         textData.text = getString(R.string.search_message)
     }
 

@@ -1,9 +1,13 @@
 package com.startup.news.application
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.location.Location
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.app.ShareCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.app.AppCompatDialogFragment
 import android.view.View
@@ -91,7 +95,7 @@ class MainActivity : AppCompatActivity(), IDatabaseSuccessFailureCallback, Fetch
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        userAddress?.onActivityResult(requestCode, resultCode, data)
+        userAddress?.onActivityResult(requestCode, resultCode)
     }
 
     private fun loadBannerAd() {
@@ -186,9 +190,25 @@ class MainActivity : AppCompatActivity(), IDatabaseSuccessFailureCallback, Fetch
     }
 
     override fun openRate() {
+        val uri = Uri.parse("market://details?id=" + BuildConfig.APPLICATION_ID)
+        val goToMarket = Intent(Intent.ACTION_VIEW, uri)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            goToMarket.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT or Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
+        else
+            goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
+        try {
+            startActivity(goToMarket)
+        } catch (e: ActivityNotFoundException) {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID)))
+        }
     }
 
     override fun openShare() {
+        val shareIntent = ShareCompat.IntentBuilder.from(this)
+                .setType("text/plain")
+                .setText("${getString(R.string.app_name)}\n {${AppConstants.SHARE_MESSAGE}}\n${AppConstants.APP_SHARE_LINK}")
+                .intent
+        startActivity(shareIntent)
     }
 
 }

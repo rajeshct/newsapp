@@ -46,6 +46,7 @@ class SelectCategory : AppCompatActivity(), ICategoryCallback, SelectCategoryAda
 
     override fun categories(tempData: List<CategoryFirebaseResponse>) {
         if (isVisibleToUser) {
+            if (pullToRefresh.isRefreshing) pullToRefresh.isRefreshing = false
             this.categoryData.addAll(tempData)
             this.selectCategoryAdapter.notifyDataSetChanged()
         }
@@ -58,8 +59,10 @@ class SelectCategory : AppCompatActivity(), ICategoryCallback, SelectCategoryAda
     }
 
     override fun hideProgress() {
-        if (isVisibleToUser)
+        if (isVisibleToUser) {
             loading.visibility = View.GONE
+            if (pullToRefresh.isRefreshing) pullToRefresh.isRefreshing = false
+        }
     }
 
     override fun showMessage(message: String) {
@@ -68,8 +71,10 @@ class SelectCategory : AppCompatActivity(), ICategoryCallback, SelectCategoryAda
     }
 
     override fun noData() {
-        if (isVisibleToUser)
+        if (isVisibleToUser) {
             noData.visibility = View.VISIBLE
+            if (pullToRefresh.isRefreshing) pullToRefresh.isRefreshing = false
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,12 +86,10 @@ class SelectCategory : AppCompatActivity(), ICategoryCallback, SelectCategoryAda
     private fun initialAction() {
         categoryData = mutableListOf()
         selectCategoryAdapter = SelectCategoryAdapter(categoryData, this)
-
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recyclerView.adapter = selectCategoryAdapter
 
-        FireBaseGetData.instance.getDataFromFireBase(this)
         btContinue.setOnClickListener {
             if (categorySelection > 0) {
                 GetCategorySelection().categorySelection(data = categoryData)
@@ -96,6 +99,19 @@ class SelectCategory : AppCompatActivity(), ICategoryCallback, SelectCategoryAda
                 finish()
             }
         }
+
+        pullToRefresh.setOnRefreshListener {
+            if (categoryData.isEmpty()) {
+                getDataFromFirebase()
+            } else {
+                pullToRefresh.isRefreshing = false
+            }
+        }
+
+        getDataFromFirebase()
     }
 
+    private fun getDataFromFirebase() {
+        FireBaseGetData.instance.getDataFromFireBase(this)
+    }
 }

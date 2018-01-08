@@ -237,7 +237,7 @@ open class FetchUserLocation(val context: Activity?, var locationCallback: Locat
         mLocationSettingsRequest = builder.build()
     }
 
-    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    fun onActivityResult(requestCode: Int, resultCode: Int) {
         when (requestCode) {
         // Check for the integer request code originally supplied to startResolutionForResult().
             REQUEST_CHECK_SETTINGS -> when (resultCode) {

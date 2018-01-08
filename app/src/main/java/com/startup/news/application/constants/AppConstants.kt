@@ -19,8 +19,10 @@ object AppConstants {
     val SUCCESS_RESULT = 1
     val PERMISSION_LOCATION = 1
     val EXTRA_REQUEST_CODE = "key"
-    val API_COUNTRY="country"
-    val API_CATEGORY="category"
-    val API_GENERAL="general"
-    val DIALOG_TAG="dialog"
+    val API_COUNTRY = "country"
+    val API_CATEGORY = "category"
+    val API_GENERAL = "general"
+    val DIALOG_TAG = "dialog"
+    val SHARE_MESSAGE = ""
+    val APP_SHARE_LINK = ""
 }

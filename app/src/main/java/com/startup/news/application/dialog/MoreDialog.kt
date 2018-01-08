@@ -85,18 +85,22 @@ class MoreDialog : AppCompatDialogFragment() {
         })
 
         text_category.setOnClickListener {
+            revealShow(false)
             iDialogCallback?.openCategory()
         }
 
         text_rate.setOnClickListener {
+            revealShow(false)
             iDialogCallback?.openRate()
         }
 
         text_search.setOnClickListener {
+            revealShow(false)
             iDialogCallback?.openSearch()
         }
 
         text_share.setOnClickListener {
+            revealShow(false)
             iDialogCallback?.openShare()
         }
     }
