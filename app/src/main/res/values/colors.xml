@@ -3,13 +3,13 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#818181</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="splash_gradient_start_color">#039be5</color>
-    <color name="splash_gradient_end_color">#81d4fa</color>
     <color name="black">#000</color>
     <color name="grey">#d3d3d3</color>
     <color name="lightgrey">#f1eeee</color>
     <color name="blue">#039be5</color>
     <color name="darkGrey">#818181</color>
     <color name="white">#ffffff</color>
+    <color name="lightBlue">#81d4fa</color>
+    <color name="lightBlack">#aa000000</color>
     <drawable name="white">@color/white</drawable>
 </resources>

@@ -4,13 +4,23 @@
     <string name="noData">No data found, check internet connection or refresh</string>
     <string name="continueFurther">Continue</string>
     <string name="trending">Trending</string>
-    <string name="searchAnything">Search content of interest</string>
+    <string name="searchAnything">Search everything</string>
     <string name="ReadFullNews">Tap here to read full news</string>
     <string name="source">Source - %s</string>
     <string name="changeCategory">Change Category</string>
     <string name="search_message">Type your favourite content and search to get details.</string>
     <string name="backPress">Press again to exit.</string>
+    <string name="request_permission">Request Permission again</string>
+    <string name="error_permission_location">Location permission is required to fetch latest news to your region. Just press allow to access location permission.</string>
+    <string name="error_permission_declined">Permission Decline, Ask again</string>
+    <string name="try_again">Try Again</string>
+    <string name="error_unable_to_fetch_address">Unable to fetch address.</string>
+    <string name="regional">Regional</string>
     <string name="adUnitId">ca-app-pub-4143557295054104/5838821757</string>
     <string name="interstiatialAdId">ca-app-pub-4143557295054104/9758665711</string>
     <string name="default_notification_channel_id">2001</string>
+    <string name="animationText">Build for you</string>
+    <string name="permission">Permission required</string>
+    <string name="rateUs">Rate Application</string>
+    <string name="share">Share with friends</string>
 </resources>

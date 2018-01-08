@@ -22,12 +22,13 @@ import kotlinx.android.synthetic.main.include_recycler_view.*
 
 class SelectCategory : AppCompatActivity(), ICategoryCallback, SelectCategoryAdapter.ICategoryCallback {
     private var categorySelection = 0
-    private lateinit var categoryData: List<CategoryFirebaseResponse>
+    private lateinit var categoryData: MutableList<CategoryFirebaseResponse>
     private var isVisibleToUser = false
+    private lateinit var selectCategoryAdapter: SelectCategoryAdapter
 
     override fun onPause() {
-        super.onPause()
         isVisibleToUser = false
+        super.onPause()
     }
 
     override fun onResume() {
@@ -45,9 +46,8 @@ class SelectCategory : AppCompatActivity(), ICategoryCallback, SelectCategoryAda
 
     override fun categories(tempData: List<CategoryFirebaseResponse>) {
         if (isVisibleToUser) {
-            this.categoryData = tempData
-            val selectCategoryAdapter = SelectCategoryAdapter(tempData, this)
-            recyclerView.adapter = selectCategoryAdapter
+            this.categoryData.addAll(tempData)
+            this.selectCategoryAdapter.notifyDataSetChanged()
         }
     }
 
@@ -79,13 +79,18 @@ class SelectCategory : AppCompatActivity(), ICategoryCallback, SelectCategoryAda
     }
 
     private fun initialAction() {
-        recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        categoryData = mutableListOf()
+        selectCategoryAdapter = SelectCategoryAdapter(categoryData, this)
+
         recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        recyclerView.adapter = selectCategoryAdapter
+
         FireBaseGetData.instance.getDataFromFireBase(this)
         btContinue.setOnClickListener {
             if (categorySelection > 0) {
                 GetCategorySelection().categorySelection(data = categoryData)
-                val intent = Intent(SelectCategory@this, MainActivity::class.java)
+                val intent = Intent(SelectCategory@ this, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
                 finish()

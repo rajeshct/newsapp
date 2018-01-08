@@ -7,4 +7,5 @@ package com.startup.news.application.prefrences
 object PrefrenceConstants {
 
     val IS_CATEGORY_SELECTED = "is_category_selected"
+    val COUNTRY = "country"
 }

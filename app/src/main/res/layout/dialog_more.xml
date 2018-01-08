@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.startup.news.application.customview.revealanimation.widget.RevealFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/animationLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/lightBlack">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/text_search"
+                style="@style/dialogTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:drawableLeft="@drawable/ic_menu"
+                android:drawablePadding="@dimen/dp_5"
+                android:drawableStart="@drawable/ic_menu"
+                android:gravity="center_vertical"
+                android:text="@string/changeCategory"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/text_category"
+                style="@style/dialogTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/text_search"
+                android:layout_alignRight="@+id/text_search"
+                android:layout_below="@+id/text_search"
+                android:drawableLeft="@drawable/ic_search"
+                android:drawablePadding="@dimen/dp_5"
+                android:drawableStart="@drawable/ic_search"
+                android:gravity="center_vertical"
+                android:text="@string/searchAnything"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/text_search"
+                app:layout_constraintTop_toBottomOf="@+id/text_search" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/text_rate"
+                style="@style/dialogTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/text_category"
+                android:layout_alignStart="@+id/text_category"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/ic_review"
+                android:drawablePadding="@dimen/dp_5"
+                android:drawableStart="@drawable/ic_review"
+                android:gravity="center_vertical"
+                android:text="@string/rateUs"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/text_search"
+                app:layout_constraintTop_toBottomOf="@+id/text_category" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/text_share"
+                style="@style/dialogTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_share"
+                android:drawablePadding="@dimen/dp_5"
+                android:drawableStart="@drawable/ic_share"
+                android:gravity="center_vertical"
+                android:text="@string/share"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/text_search"
+                app:layout_constraintTop_toBottomOf="@+id/text_rate" />
+        </android.support.constraint.ConstraintLayout>
+    </FrameLayout>
+</com.startup.news.application.customview.revealanimation.widget.RevealFrameLayout>

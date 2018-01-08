@@ -26,5 +26,13 @@ class SharedPrefrenceData {
         getSharedPrefrenceEditor().putBoolean(PrefrenceConstants.IS_CATEGORY_SELECTED, true).apply()
     }
 
+    fun putUserCountry(country: String) {
+        getSharedPrefrenceEditor().putString(PrefrenceConstants.COUNTRY, country).apply()
+    }
+
+    fun getUserCountry(): String {
+        return getSharePrefrence().getString(PrefrenceConstants.COUNTRY, "")
+    }
+
 
 }

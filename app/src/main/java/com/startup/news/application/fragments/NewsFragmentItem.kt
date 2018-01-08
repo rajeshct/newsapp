@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.startup.news.application.R
 import com.startup.news.application.adapter.NewsItemAdapter
+import com.startup.news.application.customview.ranimation.SlideInBottomAnimatorAdapter
 import com.startup.news.application.interfaces.databasecallback.ICategoryRecordCallback
 import com.startup.news.application.interfaces.viewcallback.INewsCallback
 import com.startup.news.application.localdatabase.databaseoperation.CategoryRecordDatabaseOperation
@@ -27,7 +28,7 @@ class NewsFragmentItem : Fragment(), INewsCallback, NewsItemAdapter.RecyclerView
 
 
     private lateinit var category: CategoryFirebaseResponse
-    private lateinit var newsItemAdapter: NewsItemAdapter
+    private lateinit var newsItemAdapter: SlideInBottomAnimatorAdapter
     private lateinit var newsData: MutableList<NewsApiResponse>
     private lateinit var categoryDatabase: CategoryRecordDatabaseOperation
 
@@ -50,8 +51,10 @@ class NewsFragmentItem : Fragment(), INewsCallback, NewsItemAdapter.RecyclerView
     }
 
     override fun showMessage(message: String) {
-        if (context != null && !message.isBlank())
+        if (context != null && !message.isBlank()) {
+            pullToRefresh.isRefreshing = false
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun noData() {
@@ -67,8 +70,9 @@ class NewsFragmentItem : Fragment(), INewsCallback, NewsItemAdapter.RecyclerView
         super.onViewCreated(view, savedInstanceState)
         categoryDatabase = CategoryRecordDatabaseOperation()
         newsData = mutableListOf()
-        newsItemAdapter = NewsItemAdapter(newsData)
-        newsItemAdapter.initializeCallback(this)
+        val tempNewsItemAdapter = NewsItemAdapter(newsData)
+        tempNewsItemAdapter.initializeCallback(this)
+        newsItemAdapter = SlideInBottomAnimatorAdapter(tempNewsItemAdapter)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = newsItemAdapter
         pullToRefresh.setOnRefreshListener {
@@ -116,6 +120,7 @@ class NewsFragmentItem : Fragment(), INewsCallback, NewsItemAdapter.RecyclerView
             pullToRefresh.isEnabled = false
             newsData.addAll(data)
             newsItemAdapter.notifyDataSetChanged()
+            noData.visibility = View.GONE
         }
     }
 

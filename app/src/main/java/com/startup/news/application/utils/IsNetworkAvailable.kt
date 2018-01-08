@@ -10,6 +10,8 @@ import com.startup.news.ApplicationInitializer
  * Created by rajesh on 31/12/17.
  */
 class IsNetworkAvailable {
+
+    @Suppress("DEPRECATION")
     fun isNetworkAvailable(): Boolean {
         val connectivityManager: ConnectivityManager? = ApplicationInitializer.instance
                 .applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -30,6 +32,7 @@ class IsNetworkAvailable {
                     }
                 }
             } else {
+
                 val info = connectivityManager.allNetworkInfo
                 info?.filter { it.state == NetworkInfo.State.CONNECTED }?.forEach { return true }
             }

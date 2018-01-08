@@ -13,4 +13,14 @@ object AppConstants {
     val API_KEY = "apiKey"
     val API_SOURCE = "sources"
     val API_SEARCH = "q"
+    val LOCATION_DATA_EXTRA = "location"
+    val RECEIVER = "receiver"
+    val ADDRESS = "address"
+    val SUCCESS_RESULT = 1
+    val PERMISSION_LOCATION = 1
+    val EXTRA_REQUEST_CODE = "key"
+    val API_COUNTRY="country"
+    val API_CATEGORY="category"
+    val API_GENERAL="general"
+    val DIALOG_TAG="dialog"
 }

@@ -27,4 +27,8 @@ class GenericResponseModel<T> {
     @SerializedName("articles")
     @Expose
     var results: List<T>? = null
+
+    @SerializedName("sources")
+    @Expose
+    var sources: List<T>? = null
 }

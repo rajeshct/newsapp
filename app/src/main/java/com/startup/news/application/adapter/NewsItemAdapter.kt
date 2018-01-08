@@ -33,8 +33,14 @@ class NewsItemAdapter(private val newsData: MutableList<NewsApiResponse>) : Recy
             holder.newsImage.setImage(urlToImage)
             holder.newsTitle.text = title
             holder.newsDescription.text = description
-            holder.newsDate.text = publishedAt
-            holder.newsSource.text = holder.itemView.context.getString(R.string.source, author)
+            publishedAt?.let {
+                if (it.contains("T"))
+                    holder.newsDate.text = it.substring(0, it.indexOf("T"))
+                else
+                    holder.newsDate.text = it
+            }
+            if (author != null)
+                holder.newsSource.text = holder.itemView.context.getString(R.string.source, author)
         }
     }
 

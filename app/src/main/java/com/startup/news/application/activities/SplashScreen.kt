@@ -8,14 +8,18 @@ import com.startup.news.application.R
 import com.startup.news.application.constants.AppConstants
 import com.startup.news.application.prefrences.SharedPrefrenceData
 import com.startup.news.fragments.SelectCategory
+import kotlinx.android.synthetic.main.activity_splash_screen.*
 import java.util.*
 
 class SplashScreen : AppCompatActivity() {
 
+    lateinit var timer: Timer
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
-        Timer().schedule(object : TimerTask() {
+        hTextView.animateText(getString(R.string.animationText))
+        timer = Timer()
+        timer.schedule(object : TimerTask() {
             override fun run() {
                 if (SharedPrefrenceData().isCategorySelected()) {
                     startActivity(Intent(this@SplashScreen, MainActivity::class.java))
@@ -28,4 +32,11 @@ class SplashScreen : AppCompatActivity() {
             }
         }, 1000)
     }
+
+    override fun onStop() {
+        timer.cancel()
+        timer.purge()
+        super.onStop()
+    }
+
 }

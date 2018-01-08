@@ -40,4 +40,5 @@ ext {
     versionName= "1.0"
     glideVersion='4.4.0'
     retrofitVersion='2.2.0'
+    leakCanary='1.5.4'
 }

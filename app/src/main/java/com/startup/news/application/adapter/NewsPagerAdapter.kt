@@ -12,7 +12,7 @@ class NewsPagerAdapter(fragmentManager: FragmentManager) : SmartFragmentStatePag
     lateinit var slidePages: MutableList<NewsTabModel>
 
     override fun getItem(position: Int): Fragment? {
-        return slidePages.get(position).fragment
+        return slidePages[position].fragment
     }
 
     override fun getCount(): Int = slidePages.size
@@ -25,5 +25,10 @@ class NewsPagerAdapter(fragmentManager: FragmentManager) : SmartFragmentStatePag
 
     fun initializeList(slidePages: MutableList<NewsTabModel>) {
         this.slidePages = slidePages
+    }
+
+    fun add(temp: NewsTabModel) {
+        slidePages.add(0,temp)
+        notifyDataSetChanged()
     }
 }

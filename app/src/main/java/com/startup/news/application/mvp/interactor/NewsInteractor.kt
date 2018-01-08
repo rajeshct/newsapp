@@ -42,4 +42,17 @@ class NewsInteractor {
                 })
 
     }
+
+    fun fetchCategory(iErrorSuccessCallback: IErrorSuccessCallback?, inputParam: MutableMap<String, String>): Disposable {
+        val apis = RetrofitClient.instance
+        return apis.fetchCategory(inputParam)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ kamTeamPoJoGenericResponseModel ->
+                    sendCallback(iErrorSuccessCallback, kamTeamPoJoGenericResponseModel)
+                }, {
+                    iErrorSuccessCallback?.onError(AppConstants.SHOW_COMMON_MESSAGE)
+                })
+
+    }
 }
