@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NewsApplication</string>
+    <string name="app_name">Samachar</string>
     <string name="select_interest">Select topic in which you are interested</string>
     <string name="noData">No data found, check internet connection or refresh</string>
     <string name="continueFurther">Continue</string>
@@ -19,8 +19,9 @@
     <string name="adUnitId">ca-app-pub-4143557295054104/5838821757</string>
     <string name="interstiatialAdId">ca-app-pub-4143557295054104/9758665711</string>
     <string name="default_notification_channel_id">2001</string>
-    <string name="animationText">Build for you</string>
+    <string name="animationText">Read news in single tap</string>
     <string name="permission">Permission required</string>
     <string name="rateUs">Rate Application</string>
     <string name="share">Share with friends</string>
+    <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://www.unico-cosas.com\",\n  }\n}]</string>
 </resources>
